@@ -1,10 +1,17 @@
-
 'use client';
 
 import { useState } from 'react';
 
+type Invoice = {
+  id: number;
+  customer: string;
+  email: string;
+  amount: number;
+  status: string;
+};
+
 export default function InvoicesPage() {
-  const [invoices, setInvoices] = useState([
+  const [invoices, setInvoices] = useState<Invoice[]>([
     { id: 1, customer: 'Liam Johnson', email: 'liam@example.com', amount: 250, status: 'Paid' },
     { id: 2, customer: 'Emma Wilson', email: 'emma@example.com', amount: 180, status: 'Pending' },
     { id: 3, customer: 'Noah Brown', email: 'noah@example.com', amount: 320, status: 'Overdue' },
@@ -12,24 +19,24 @@ export default function InvoicesPage() {
 
   const [showAddForm, setShowAddForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
-  const [editingInvoice, setEditingInvoice] = useState(null);
+  const [editingInvoice, setEditingInvoice] = useState<Invoice | null>(null);
 
   const [customer, setCustomer] = useState('');
   const [email, setEmail] = useState('');
   const [amount, setAmount] = useState('');
   const [status, setStatus] = useState('Pending');
 
-  const statusStyles = {
+  const statusStyles: Record<string, string> = {
     Paid: 'bg-green-100 text-green-800',
     Pending: 'bg-yellow-100 text-yellow-800',
     Overdue: 'bg-red-100 text-red-800',
   };
 
   // ADD INVOICE
-  function handleAddInvoice(e) {
+  function handleAddInvoice(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const newInvoice = {
+    const newInvoice: Invoice = {
       id: invoices.length + 1,
       customer,
       email,
@@ -47,19 +54,21 @@ export default function InvoicesPage() {
   }
 
   // OPEN EDIT FORM
-  function openEditForm(invoice) {
+  function openEditForm(invoice: Invoice) {
     setEditingInvoice(invoice);
     setCustomer(invoice.customer);
     setEmail(invoice.email);
-    setAmount(invoice.amount);
+    setAmount(String(invoice.amount));
     setStatus(invoice.status);
     setShowEditForm(true);
     setShowAddForm(false);
   }
 
   // SAVE EDITED INVOICE
-  function handleEditInvoice(e) {
+  function handleEditInvoice(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!editingInvoice) return;
 
     const updated = invoices.map((inv) =>
       inv.id === editingInvoice.id
@@ -79,9 +88,8 @@ export default function InvoicesPage() {
   }
 
   // DELETE INVOICE
-  function handleDeleteInvoice(id) {
-    const filtered = invoices.filter((inv) => inv.id !== id);
-    setInvoices(filtered);
+  function handleDeleteInvoice(id: number) {
+    setInvoices(invoices.filter((inv) => inv.id !== id));
   }
 
   return (
@@ -204,7 +212,7 @@ export default function InvoicesPage() {
         <thead className="bg-gray-50">
           <tr>
             <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Customer</th>
-            <th className="px-6 py-3 text-left text-sm font font-medium text-gray-500">Email</th>
+            <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Email</th>
             <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Amount</th>
             <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
             <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Actions</th>
