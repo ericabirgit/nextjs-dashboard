@@ -21,12 +21,11 @@ const config: Config = {
     },
     keyframes: {
       shimmer: {
-        '100%': {
-          transform: 'translateX(100%)',
-        },
+        '100%': { transform: 'translateX(100%)' },
       },
     },
   },
   plugins: [require('@tailwindcss/forms')],
 };
+
 export default config;

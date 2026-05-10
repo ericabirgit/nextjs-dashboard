@@ -1,13 +1,10 @@
+import SideNav from '@/app/ui/dashboard/sidenav';
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({ children }) {
   return (
-    <section>
-      <nav>
-        <a href="/dashboard">Dashboard</a> | 
-        <a href="/dashboard/invoices">Invoices</a> | 
-        <a href="/dashboard/customers">Customers</a>
-      </nav>
-      <div>{children}</div>
-    </section>
+    <div className="flex">
+      <SideNav />
+      <div className="flex-1 p-6 bg-gray-50">{children}</div>
+    </div>
   );
 }
