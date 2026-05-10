@@ -1,4 +1,3 @@
-
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -14,6 +13,6 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-export const proxy = {
-  pathFilter: ['/dashboard/:path*'],
+export const config = {
+  matcher: ['/dashboard/:path*'],
 };
