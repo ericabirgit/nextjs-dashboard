@@ -10,7 +10,8 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  function handleLogin(e) {
+  function handleLogin(e: React.FormEvent<HTMLFormElement>) {
+
     e.preventDefault();
 
     // Mock login — hyväksyy minkä tahansa syötteen
